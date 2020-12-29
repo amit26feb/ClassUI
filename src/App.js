@@ -20,7 +20,7 @@ function App() {
   function handleSubmit() {
     console.log(selectedClass, textAreaData);
     let classInfo = { className: selectedClass, attendenceData: textAreaData };
-    fetch("https://geetaclassapi.herokuapp.com/GenerateExcel", {
+    fetch("http://localhost:58882/GenerateExcel", {
       method: 'POST',
      
       body: JSON.stringify(classInfo),
@@ -31,7 +31,7 @@ function App() {
       credentials: 'same-origin'
      
     })
-      .then(response => response)
+      .then(response => response.json())
       .then(data => {
         console.log(data)
       })

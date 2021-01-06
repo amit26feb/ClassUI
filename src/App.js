@@ -26,7 +26,8 @@ function App() {
             className: selectedClass,
             attendenceData: textAreaData
         };
-        fetch("https://geetaclassapi.herokuapp.com/GenerateExcel", {
+        setApiResponse('Loading...');
+        fetch("http://localhost:58882/GenerateExcel", {
             method: 'POST',
 
             body: JSON.stringify(classInfo),

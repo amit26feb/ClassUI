@@ -1,13 +1,14 @@
 import './App.css';
 import React from 'react';
 import {Container, Row, Col} from 'reactstrap';
-import copy from "copy-to-clipboard";
+import copy from 'copy-to-clipboard';
 
 
 function App() {
     var [selectedClass, setSelectedClass] = React.useState("");
     var [textAreaData, setTextArea] = React.useState("");
     var [apiResponse, setApiResponse] = React.useState("");
+    var [hasResponse, setHasResponse] = React.useState(false);
 
     function handleChange(event) {
         setTextArea(event.target.value);
@@ -18,9 +19,7 @@ function App() {
         setSelectedClass(event.target.value);
         // console.log(selectedClass);
     }
-    function handleCopy() {
-        copy(apiResponse);
-    }
+
 
     function handleSubmit() { // console.log(selectedClass, textAreaData);
         let classInfo = {
@@ -37,15 +36,18 @@ function App() {
             },
             credentials: 'same-origin'
 
-        }).then(response => response.json()).then(data => {
-            console.log(data)
+        }).then(response => response.json()).then(data => { // console.log(data)
             setApiResponse(data);
-            console.log(apiResponse)
+            data.length > 0 ? setHasResponse(true) : setHasResponse(false);
+            // console.log(apiResponse)
         }).catch(error => {
-            setApiResponse(apiResponse);
+            setHasResponse(false);
+            // console.log(error);
         })
     }
-
+    function handleClick() {
+        copy(apiResponse);
+    }
 
     return (
         <div>
@@ -80,9 +82,15 @@ function App() {
                             <input className="btn btn-danger" type="reset" value="Clear"/>
                         </Col>
                     </Row>
-                    <Row>
-                        <button onClick={handleCopy}>Copy</button>
-                    </Row>
+                    {
+                    hasResponse ? <Row>
+                        <Col>
+                            <input className="btn btn-success" type="button" value="Copy"
+
+                                onClick={handleClick}/>
+                        </Col>
+                    </Row> : null
+                }
                     <Row>
                         <Col>
                             <p>{apiResponse}</p>

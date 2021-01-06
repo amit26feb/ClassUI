@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import {Container, Row, Col} from 'reactstrap';
+import copy from "copy-to-clipboard";
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
     function _onSelect(event) {
         setSelectedClass(event.target.value);
         // console.log(selectedClass);
+    }
+    function handleCopy() {
+        copy(apiResponse);
     }
 
     function handleSubmit() { // console.log(selectedClass, textAreaData);
@@ -75,6 +79,9 @@ function App() {
                         <Col xs="3">
                             <input className="btn btn-danger" type="reset" value="Clear"/>
                         </Col>
+                    </Row>
+                    <Row>
+                        <button onClick={handleCopy}>Copy</button>
                     </Row>
                     <Row>
                         <Col>
